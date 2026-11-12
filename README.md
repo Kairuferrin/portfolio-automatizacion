@@ -5,7 +5,7 @@ Estudiante de Economía en la UB que aprende automatización para pymes. Ya he c
 ## Proyectos
 | Nº | Proyecto | Qué aprendo | Estado |
 |---|---|---|---|
-| 1 | Mapa de un proceso repetitivo | Detectar qué se puede automatizar | Pendiente |
+| 1 | [Mapa de un proceso: «director financiero de bolsillo» para una marca de ropa](01-mapa-proceso/) | Detectar qué se puede automatizar | ✅ Hecho |
 | 2 | Consultar una API pública | APIs y JSON | Pendiente |
 | 3 | Formulario → Google Sheets → email | n8n | Pendiente |
 | 4 | Clasificar mensajes con IA | IA dentro de un flujo | Pendiente |
