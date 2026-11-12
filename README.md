@@ -1,10 +1,6 @@
 # Portfolio de automatización · Kairu Ferrín
 
-Estudiante de Economía en la Universitat de Barcelona (UB). Estoy aprendiendo automatización para pymes: conectar las herramientas de una empresa para eliminar las tareas repetitivas.
-
-## Sobre mí
-- **Webs:** he creado mi primera web en HTML y he trabajado en el tema de una tienda Shopify.
-- **Finanzas:** me interesan las finanzas y quiero aplicar la automatización a tareas financieras.
+Estudiante de Economía en la UB que aprende automatización para pymes. Ya he creado webs (mi primera web en HTML y el tema de una tienda Shopify) y me interesan las finanzas.
 
 ## Proyectos
 | Nº | Proyecto | Qué aprendo | Estado |
