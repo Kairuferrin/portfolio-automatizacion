@@ -1,0 +1,75 @@
+{
+  "name": "Atención al cliente con IA: email → Gemini → borrador",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": { "item": [ { "mode": "everyMinute" } ] },
+        "simple": false,
+        "filters": { "labelIds": [] },
+        "options": {}
+      },
+      "id": "b1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Email de cliente",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres el equipo de atención al cliente de una pequeña marca de ropa que vende online.\n\nLee este email de un cliente y haz dos cosas:\n1. Clasifícalo en una de estas categorías: \"donde_esta_mi_pedido\", \"devolucion\" u \"otra\".\n2. Redacta una respuesta breve y amable, en el mismo idioma que el cliente.\n\nReglas:\n- No inventes datos: no prometas fechas de entrega, importes ni reembolsos concretos.\n- Si falta el número de pedido y hace falta, pídelo con educación.\n- Para devoluciones, indica que puede solicitarla en nuestro formulario de devoluciones.\n- Firma como \"El equipo de atención al cliente\".\n\nEmail:\nDe: {{ $json.from.text }}\nAsunto: {{ $json.subject }}\nTexto:\n{{ $json.text }}",
+        "hasOutputParser": true
+      },
+      "id": "b1b2c3d4-0002-4000-8000-000000000002",
+      "name": "IA: clasificar y redactar",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [260, 0]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "id": "b1b2c3d4-0003-4000-8000-000000000003",
+      "name": "Gemini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [200, 220]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"categoria\": \"donde_esta_mi_pedido\",\n  \"respuesta\": \"Hola, gracias por escribirnos...\"\n}"
+      },
+      "id": "b1b2c3d4-0004-4000-8000-000000000004",
+      "name": "Formato de respuesta",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [380, 220]
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=Re: {{ $('Email de cliente').item.json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.respuesta }}",
+        "options": {
+          "threadId": "={{ $('Email de cliente').item.json.threadId }}",
+          "sendTo": "={{ $('Email de cliente').item.json.from.value[0].address }}"
+        }
+      },
+      "id": "b1b2c3d4-0005-4000-8000-000000000005",
+      "name": "Crear borrador en Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [560, 0]
+    }
+  ],
+  "connections": {
+    "Email de cliente": { "main": [ [ { "node": "IA: clasificar y redactar", "type": "main", "index": 0 } ] ] },
+    "Gemini": { "ai_languageModel": [ [ { "node": "IA: clasificar y redactar", "type": "ai_languageModel", "index": 0 } ] ] },
+    "Formato de respuesta": { "ai_outputParser": [ [ { "node": "IA: clasificar y redactar", "type": "ai_outputParser", "index": 0 } ] ] },
+    "IA: clasificar y redactar": { "main": [ [ { "node": "Crear borrador en Gmail", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": { "executionOrder": "v1" }
+}

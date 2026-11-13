@@ -8,7 +8,7 @@ Estudiante de Economía en la UB que aprende automatización para pymes. Ya he c
 | 1 | [Mapa de un proceso: «director financiero de bolsillo» para una marca de ropa](01-mapa-proceso/) | Detectar qué se puede automatizar | ✅ Hecho |
 | 2 | [Tipos de cambio desde una API para las ventas en dólares y libras](02-api-json/) | APIs y JSON | ✅ Hecho |
 | 3 | [Devoluciones automáticas: formulario → Google Sheets → Gmail](03-n8n-devoluciones/) | n8n | ✅ Hecho |
-| 4 | Responder emails de atención al cliente de la marca de ropa con IA («¿dónde está mi pedido?») | IA dentro de un flujo | Pendiente |
+| 4 | [Atención al cliente con IA: clasifica emails y deja borradores de respuesta](04-ia-atencion-cliente/) | IA dentro de un flujo | ✅ Hecho |
 | 5 | Resumen de ventas desde un CSV | Python | Pendiente |
 | 6 | Consultas sobre datos de ventas | SQL (SQLite) | Pendiente |
 | 7 | El proyecto 3 en Make o Zapier | Make / Zapier | Pendiente |
