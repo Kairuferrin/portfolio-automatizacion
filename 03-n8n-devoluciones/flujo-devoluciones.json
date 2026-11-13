@@ -1,0 +1,95 @@
+{
+  "name": "Devoluciones: formulario → Google Sheets → Gmail",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Solicitud de devolución",
+        "formDescription": "Rellena este formulario y te contestaremos en menos de 48 horas.",
+        "formFields": {
+          "values": [
+            { "fieldLabel": "Nombre", "fieldType": "text", "requiredField": true },
+            { "fieldLabel": "Email", "fieldType": "email", "requiredField": true },
+            { "fieldLabel": "Pedido", "fieldType": "text", "placeholder": "Ej.: #1001", "requiredField": true },
+            { "fieldLabel": "Producto", "fieldType": "text", "requiredField": true },
+            {
+              "fieldLabel": "Talla",
+              "fieldType": "dropdown",
+              "fieldOptions": { "values": [ { "option": "XS" }, { "option": "S" }, { "option": "M" }, { "option": "L" }, { "option": "XL" } ] },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Motivo",
+              "fieldType": "dropdown",
+              "fieldOptions": { "values": [ { "option": "Talla incorrecta" }, { "option": "Producto defectuoso" }, { "option": "No es lo que esperaba" }, { "option": "Otro" } ] },
+              "requiredField": true
+            },
+            { "fieldLabel": "Comentarios", "fieldType": "textarea" }
+          ]
+        },
+        "options": { "appendAttribution": false }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Formulario de devolución",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [0, 0],
+      "webhookId": "a1b2c3d4-0001-4000-8000-0000000000ff"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "list", "value": "" },
+        "sheetName": { "__rl": true, "mode": "list", "value": "" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha": "={{ $json.submittedAt }}",
+            "Nombre": "={{ $json.Nombre }}",
+            "Email": "={{ $json.Email }}",
+            "Pedido": "={{ $json.Pedido }}",
+            "Producto": "={{ $json.Producto }}",
+            "Talla": "={{ $json.Talla }}",
+            "Motivo": "={{ $json.Motivo }}",
+            "Comentarios": "={{ $json.Comentarios }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            { "id": "Fecha", "displayName": "Fecha", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Nombre", "displayName": "Nombre", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Email", "displayName": "Email", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Pedido", "displayName": "Pedido", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Producto", "displayName": "Producto", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Talla", "displayName": "Talla", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Motivo", "displayName": "Motivo", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Comentarios", "displayName": "Comentarios", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Guardar en Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [260, 0]
+    },
+    {
+      "parameters": {
+        "sendTo": "PON_AQUI_TU_EMAIL",
+        "subject": "=Nueva devolución · pedido {{ $('Formulario de devolución').item.json.Pedido }}",
+        "emailType": "text",
+        "message": "=Nueva solicitud de devolución:\n\nCliente: {{ $('Formulario de devolución').item.json.Nombre }} ({{ $('Formulario de devolución').item.json.Email }})\nPedido: {{ $('Formulario de devolución').item.json.Pedido }}\nProducto: {{ $('Formulario de devolución').item.json.Producto }} · Talla {{ $('Formulario de devolución').item.json.Talla }}\nMotivo: {{ $('Formulario de devolución').item.json.Motivo }}\nComentarios: {{ $('Formulario de devolución').item.json.Comentarios }}\n\nYa está guardada en la hoja Devoluciones.",
+        "options": { "appendAttribution": false }
+      },
+      "id": "a1b2c3d4-0003-4000-8000-000000000003",
+      "name": "Avisar por Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [520, 0]
+    }
+  ],
+  "connections": {
+    "Formulario de devolución": { "main": [ [ { "node": "Guardar en Google Sheets", "type": "main", "index": 0 } ] ] },
+    "Guardar en Google Sheets": { "main": [ [ { "node": "Avisar por Gmail", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": { "executionOrder": "v1" }
+}
