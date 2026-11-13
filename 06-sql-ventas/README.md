@@ -7,7 +7,7 @@ Un CSV sirve para guardar ventas, pero no para hacerles preguntas rápidas. ¿Qu
 
 ## La solución
 1. **`cargar_bd.py`** guarda las ventas en una base de datos **SQLite** (`ventas.db`), un único archivo que no necesita servidor. Añade la columna `importe_eur` reutilizando las funciones de conversión del proyecto 5, sin copiar el código.
-2. **`consultas.sql`** contiene 5 preguntas de negocio escritas en **SQL**.
+2. **`consultas.sql`** contiene 6 preguntas de negocio escritas en **SQL**.
 
 ## Cómo usarlo
 ```bash
@@ -24,6 +24,7 @@ sqlite3 ventas.db < consultas.sql
 | 3. Tallas más devueltas | La M (9,0 % de líneas) y la L (8,5 %); la XS es la que menos (5,8 %) |
 | 4. Monedas de pago | EUR 80,3 %, USD 10,3 %, GBP 9,4 % |
 | 5. Ticket medio bruto por trimestre (incluye pedidos devueltos) | Entre 100,63 € (T4) y 108,58 € (T3) |
+| 6. Producto que más se devuelve (consulta escrita por mí) | Pantalón (8,8 % de líneas); la sudadera es el que menos (6,3 %) |
 
 En la pregunta 1 puede haber diferencias de ±0,02 € con el proyecto 5, porque aquí cada venta se redondea a céntimos antes de sumar.
 

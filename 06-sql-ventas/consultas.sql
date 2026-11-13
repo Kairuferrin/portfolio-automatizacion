@@ -51,3 +51,12 @@ SELECT CASE
 FROM ventas
 GROUP BY trimestre
 ORDER BY trimestre;
+
+-- 6. ¿Qué producto se devuelve más? (% de líneas de pedido devueltas)
+SELECT producto,
+       COUNT(*)                                  AS lineas,
+       SUM(devuelto)                             AS devueltas,
+       ROUND(100.0 * SUM(devuelto) / COUNT(*), 1) AS tasa_devolucion_pct
+FROM ventas
+GROUP BY producto
+ORDER BY tasa_devolucion_pct DESC;
