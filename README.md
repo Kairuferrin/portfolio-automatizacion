@@ -11,6 +11,6 @@ Estudiante de Economía en la UB que aprende automatización para pymes. Ya he c
 | 4 | [Atención al cliente con IA: clasifica emails y deja borradores de respuesta](04-ia-atencion-cliente/) | IA dentro de un flujo | ✅ Hecho |
 | 5 | [Resumen mensual de ventas (datos ficticios) con conversión de moneda](05-python-ventas/) | Python | ✅ Hecho |
 | 6 | [Preguntas de negocio con SQL sobre las ventas (datos ficticios)](06-sql-ventas/) | SQL (SQLite) | ✅ Hecho |
-| 7 | El proyecto 3 en Make o Zapier | Make / Zapier | Pendiente |
+| 7 | [El flujo de devoluciones en Make y comparación con n8n](07-make-devoluciones/) | Make | ✅ Hecho |
 
 Cada proyecto tendrá su propia carpeta con un README: el problema, la solución y cómo usarla.
