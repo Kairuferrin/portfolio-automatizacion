@@ -28,6 +28,15 @@ Resultado: cero copiar y pegar, datos ordenados y aviso al momento.
 7. En el nodo de Gmail, elige tu credencial y cambia `PON_AQUI_TU_EMAIL` por tu email.
 8. Pulsa **Execute workflow** y rellena el formulario.
 
+## Por qué lo hice así
+- **El problema:** gestionar las devoluciones a mano hace perder tiempo e información por el camino, y es difícil tener todos los datos recopilados en un sitio para luego estudiarlos. Además, es un problema común en muchas empresas.
+- **Alternativas:** también se puede hacer con Make, que es más visual, pero en mi opinión menos práctico (lo comparo en el [proyecto 7](../07-make-devoluciones/)).
+- **Por qué n8n y esta combinación:** n8n era la herramienta que más pedían las ofertas que analicé. La combinación formulario → Sheets → email no es muy extensa, pero ya automatiza dos acciones.
+- **Qué cambiaría en una empresa real:**
+  - Lo pondría en la nube: ahora funciona en mi ordenador y, si lo apago, el flujo se para.
+  - Haría un formulario personalizado para el problema y la empresa, y puliría los detalles de la experiencia.
+  - La base técnica no cambiaría mucho, pero ahora lo haría más rápido y certero.
+
 ## Qué he aprendido
 - **Nodos y conexiones:** cada nodo es un puesto de la cadena y las flechas pasan los datos al siguiente.
 - **«Execute step» no es «Execute workflow»:** el primero prueba solo un nodo; el segundo, el flujo entero.

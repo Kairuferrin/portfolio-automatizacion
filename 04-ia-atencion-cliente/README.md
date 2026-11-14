@@ -32,6 +32,16 @@ flowchart LR
 
 ⚠️ **Privacidad:** en el plan gratuito de Gemini, Google usa los datos enviados para mejorar sus productos. Para emails reales de clientes hay que usar un plan de pago.
 
+## Por qué lo hice así
+- **El problema:** responder a mano se lleva muchísimo tiempo, y las respuestas suelen ser las mismas. Además, de una empresa seria se espera uniformidad y formalidad en las respuestas, y eso puede fallar si cada una la escribe una persona.
+- **Alternativas:** usé la versión estándar y gratuita de Gemini. Hay modelos de IA de pago más potentes que no son muy caros, pero estas respuestas no necesitan tanta potencia: para una pyme basta con un modelo sencillo (eso sí, de pago, por la privacidad; ver abajo).
+- **Por qué Gemini:** trabajé todo el proceso dentro del ecosistema de Google, por comodidad y por compatibilidad entre las herramientas.
+- **Por qué un borrador y no un envío automático:** para que una persona supervise la respuesta. La IA a veces se equivoca, así que el trabajo humano se centra en el pensamiento crítico: si la respuesta está bien, se envía; si está mal, se modifica.
+- **Qué cambiaría en una empresa real:**
+  - Lo pondría en la nube en vez de en mi ordenador.
+  - Usaría una opción de pago, más privada: la versión gratuita recoge los datos, y aquí serían emails reales de clientes.
+  - Delimitaría más qué puede contestar la IA. Cuando no pueda, el borrador lo diría según el caso: si la pregunta tiene que ver con la empresa, que alguien del equipo se pondrá en contacto; si no tiene que ver, aclararlo y decir que no puede darle respuesta.
+
 ## Qué he aprendido
 - **Sub-nodos:** el modelo de IA y el formato de respuesta se enchufan por debajo del nodo principal.
 - **Salida estructurada:** con un ejemplo JSON, la IA siempre responde con las mismas casillas.
