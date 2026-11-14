@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pregunta a tus datos</title>
+<style>
+  :root {
+    --fondo: #f6f5f2; --tarjeta: #ffffff; --texto: #1d1d1b; --suave: #6b6a66;
+    --borde: #e2e0da; --acento: #2f6f5e; --acento-texto: #ffffff;
+    --aviso: #a3412b; --ok: #2f6f5e; --codigo: #f0efea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #161615; --tarjeta: #1f1f1d; --texto: #ecebe6; --suave: #a3a29c;
+      --borde: #34332f; --acento: #6fbfa6; --acento-texto: #10201b;
+      --aviso: #ef8a70; --ok: #6fbfa6; --codigo: #2a2a27;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--texto);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  .sub { color: var(--suave); margin: 0 0 24px; }
+  section { background: var(--tarjeta); border: 1px solid var(--borde);
+            border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+  section.oculto { display: none; }
+  h2 { font-size: 1rem; margin: 0 0 10px; }
+  h2 span { color: var(--suave); font-weight: 400; }
+  textarea, input[type=text] { width: 100%; font: inherit; color: var(--texto);
+    background: var(--fondo); border: 1px solid var(--borde); border-radius: 8px;
+    padding: 10px; }
+  textarea.sql { font-family: ui-monospace, Menlo, monospace; font-size: 14px;
+                 background: var(--codigo); min-height: 120px; }
+  .fila { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  button { font: inherit; border: 1px solid var(--borde); border-radius: 8px;
+           padding: 8px 14px; background: var(--tarjeta); color: var(--texto);
+           cursor: pointer; }
+  button.principal { background: var(--acento); color: var(--acento-texto);
+                     border-color: var(--acento); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .nota { color: var(--suave); font-size: .9rem; margin: 8px 0 0; }
+  .error { color: var(--aviso); margin: 10px 0 0; }
+  .tabla { overflow-x: auto; margin-top: 10px; }
+  table { border-collapse: collapse; font-size: .95rem; }
+  th, td { border-bottom: 1px solid var(--borde); padding: 6px 12px; text-align: left; }
+  th { color: var(--suave); font-weight: 600; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .comparar { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .comparar { grid-template-columns: 1fr 2fr; } }
+  .caja { background: var(--fondo); border-radius: 8px; padding: 10px; }
+  .caja h3 { font-size: .85rem; color: var(--suave); margin: 0 0 6px; font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pregunta a tus datos</h1>
+  <p class="sub">Ventas ficticias de una marca de ropa (2025). La IA escribe el SQL,
+    tú predices el resultado y después se ejecuta.</p>
+
+  <section>
+    <h2>1 · Tu pregunta</h2>
+    <input id="pregunta" type="text" placeholder="Ej.: ¿Qué talla se devuelve más en diciembre?">
+    <div class="fila">
+      <button id="btn-generar" class="principal">Generar SQL con IA</button>
+      <button id="btn-yo">Escribo yo el SQL</button>
+    </div>
+    <p id="error-1" class="error" hidden></p>
+  </section>
+
+  <section id="paso-2" class="oculto">
+    <h2>2 · La consulta <span>(puedes editarla)</span></h2>
+    <textarea id="sql" class="sql" spellcheck="false"></textarea>
+    <div class="fila"><button id="btn-ordenar">Ordenar SQL</button></div>
+    <p id="explicacion-sql" class="nota"></p>
+  </section>
+
+  <section id="paso-3" class="oculto">
+    <h2>3 · Tu predicción <span>(antes de ejecutar)</span></h2>
+    <textarea id="prediccion" rows="2"
+      placeholder="¿Qué crees que devolverá? Columnas, número de filas, cuál sale primero…"></textarea>
+    <div class="fila">
+      <button id="btn-ejecutar" class="principal" disabled>Ejecutar</button>
+    </div>
+    <p class="nota">El botón se activa cuando escribes tu predicción.</p>
+    <p id="error-3" class="error" hidden></p>
+  </section>
+
+  <section id="paso-4" class="oculto">
+    <h2>4 · Resultado</h2>
+    <div class="comparar">
+      <div class="caja"><h3>Tu predicción</h3><div id="ver-prediccion"></div></div>
+      <div class="caja"><h3>Lo que ha devuelto</h3><div id="resultado" class="tabla"></div></div>
+    </div>
+    <div class="fila">
+      <button id="btn-explicar">Explícamelo con IA</button>
+    </div>
+    <p id="explicacion" class="nota"></p>
+    <p id="error-4" class="error" hidden></p>
+  </section>
+</main>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+
+  async function llamar(ruta, datos) {
+    const r = await fetch(ruta, { method: "POST",
+      headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) });
+    const json = await r.json();
+    if (!r.ok) throw new Error(json.error || "Error desconocido");
+    return json;
+  }
+  function mostrarError(n, texto) {
+    const p = $("error-" + n); p.textContent = texto; p.hidden = !texto;
+  }
+  function mostrar(id) { $(id).classList.remove("oculto"); }
+  function ocultarDesde(paso) {
+    for (let i = paso; i <= 4; i++) $("paso-" + i).classList.add("oculto");
+  }
+  function prepararPrediccion() {
+    $("prediccion").value = ""; $("btn-ejecutar").disabled = true;
+    ocultarDesde(4); mostrar("paso-3"); mostrarError(3, "");
+  }
+
+  $("btn-generar").onclick = async () => {
+    const pregunta = $("pregunta").value.trim();
+    if (!pregunta) return mostrarError(1, "Escribe una pregunta.");
+    mostrarError(1, ""); ocultarDesde(2);
+    $("btn-generar").disabled = true; $("btn-generar").textContent = "Pensando…";
+    try {
+      const r = await llamar("/api/sql", { pregunta });
+      $("sql").value = r.sql; $("explicacion-sql").textContent = r.explicacion_sql;
+      mostrar("paso-2"); ajustarAltura();
+      if (r.sql) prepararPrediccion();
+    } catch (e) { mostrarError(1, e.message); }
+    $("btn-generar").disabled = false; $("btn-generar").textContent = "Generar SQL con IA";
+  };
+
+  $("btn-yo").onclick = () => {
+    $("sql").value = ""; $("explicacion-sql").textContent =
+      "Modo examen: escribe tu propia consulta sobre la tabla «ventas».";
+    mostrar("paso-2"); prepararPrediccion(); $("sql").focus();
+  };
+
+  // El cuadro del SQL crece según lo larga que sea la consulta.
+  function ajustarAltura() {
+    const t = $("sql"); t.style.height = "auto"; t.style.height = (t.scrollHeight + 4) + "px";
+  }
+  new MutationObserver(ajustarAltura).observe($("paso-2"), { attributes: true });
+
+  // Ordenar solo cambia los saltos de línea, no lo que hace la consulta.
+  $("btn-ordenar").onclick = async () => {
+    try {
+      const r = await llamar("/api/formatear", { sql: $("sql").value });
+      $("sql").value = r.sql; ajustarAltura();
+    } catch (e) { mostrarError(3, e.message); }
+  };
+
+  // Si cambias el SQL, hay que volver a predecir.
+  $("sql").oninput = () => {
+    ajustarAltura();
+    if (!$("paso-3").classList.contains("oculto")) prepararPrediccion();
+  };
+  $("prediccion").oninput = () => {
+    $("btn-ejecutar").disabled = $("prediccion").value.trim().length < 3;
+  };
+
+  $("btn-ejecutar").onclick = async () => {
+    mostrarError(3, ""); ocultarDesde(4);
+    try {
+      const r = await llamar("/api/ejecutar", { sql: $("sql").value });
+      $("ver-prediccion").textContent = $("prediccion").value;
+      $("resultado").innerHTML = tablaHTML(r);
+      $("explicacion").textContent = ""; mostrarError(4, "");
+      mostrar("paso-4");
+    } catch (e) { mostrarError(3, e.message); }
+  };
+
+  $("btn-explicar").onclick = async () => {
+    mostrarError(4, ""); $("btn-explicar").disabled = true;
+    $("explicacion").textContent = "Pensando…";
+    try {
+      const r = await llamar("/api/explicar",
+        { pregunta: $("pregunta").value, sql: $("sql").value });
+      $("explicacion").textContent = r.explicacion;
+    } catch (e) { $("explicacion").textContent = ""; mostrarError(4, e.message); }
+    $("btn-explicar").disabled = false;
+  };
+
+  function escapar(v) {
+    return String(v ?? "").replace(/[&<>"]/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  }
+  function tablaHTML(r) {
+    if (!r.filas.length) return "<p class='nota'>La consulta no ha devuelto ninguna fila.</p>";
+    let h = "<table><thead><tr>" + r.columnas.map((c) => `<th>${escapar(c)}</th>`).join("") +
+            "</tr></thead><tbody>";
+    for (const fila of r.filas) {
+      h += "<tr>" + fila.map((v) =>
+        `<td class="${typeof v === "number" ? "num" : ""}">${escapar(v)}</td>`).join("") + "</tr>";
+    }
+    h += "</tbody></table>";
+    h += `<p class="nota">${r.filas.length} fila(s)${r.cortado ? " (solo se muestran las primeras 50)" : ""}.</p>`;
+    return h;
+  }
+</script>
+</body>
+</html>

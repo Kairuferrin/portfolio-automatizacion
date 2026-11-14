@@ -21,6 +21,7 @@ flowchart LR
     P1 --> P3[3 · Returns in n8n]
     P3 --> P7[7 · The same in Make]
     P1 --> P4[4 · AI customer service]
+    P6 --> P8[8 · Ask your data with AI]
 ```
 
 **Tools:** n8n · Make · Google Sheets · Gmail · Google Gemini · Python · SQL (SQLite) · REST APIs · Git and GitHub
@@ -35,5 +36,6 @@ flowchart LR
 | 5 | [Monthly sales summary (fictional data) with currency conversion](05-python-ventas/) | Python | ✅ Done |
 | 6 | [Business questions with SQL on the sales data (fictional data)](06-sql-ventas/) | SQL (SQLite) | ✅ Done |
 | 7 | [The returns workflow in Make, compared with n8n](07-make-devoluciones/) | Make | ✅ Done |
+| 8 | [Ask your data with AI: question → SQL → result (fictional data)](08-ia-preguntas-datos/) | AI + SQL + Python | ✅ Done |
 
-Each project has its own folder with a README: the problem, the solution, how to use it and what I learned. Projects 3 and 4 also explain **why I built them the way I did**. Projects 5 and 6 use **fictional sales data**, generated for practice.
+Each project has its own folder with a README: the problem, the solution, how to use it and what I learned. Projects 3, 4 and 8 also explain **why I built them the way I did**. Projects 5, 6 and 8 use **fictional sales data**, generated for practice.
