@@ -1,34 +1,34 @@
-# Proyecto 1 · Mapa de un proceso: el «director financiero de bolsillo»
+# Project 1 · Process map: the "pocket CFO"
 
-## El problema
-Una pequeña marca de ropa que vende online con **Shopify** quiere saber cada mes cómo va el negocio. Hoy alguien lo prepara a mano: descarga datos, los junta en un Excel, hace cuentas y gráficos y se los manda al dueño. Pierde horas cada mes y es fácil equivocarse.
+## The problem
+A small clothing brand that sells online with **Shopify** wants to know how the business is doing every month. Today someone prepares it by hand: they download data, put it together in Excel, do the maths and the charts, and send it to the owner. It takes hours every month and it's easy to make mistakes.
 
-## El proceso hoy (a mano) y qué se puede automatizar
+## The process today (by hand) and what can be automated
 
 ```mermaid
 flowchart TD
-    A[1. Cierre de mes] --> B[2. Recoger datos: Shopify y banco]
-    B --> C[3. Juntar los datos en una tabla]
-    C --> D[4. Calcular indicadores]
-    D --> E[5. Hacer gráficos]
-    E --> F[6. Montar el informe + explicación con IA]
-    F --> G{7. Revisión por una persona}
-    G -->|OK| H[8. Enviar por email al dueño]
-    G -->|Algo raro| C
+    A[1. Month-end close] --> B[2. Collect data: Shopify and bank]
+    B --> C[3. Combine the data in one table]
+    C --> D[4. Calculate indicators]
+    D --> E[5. Make charts]
+    E --> F[6. Build the report + AI explanation]
+    F --> G{7. Review by a person}
+    G -->|OK| H[8. Email it to the owner]
+    G -->|Something looks wrong| C
 ```
 
-| # | Paso | ¿Automatizable? | Cómo |
+| # | Step | Automatable? | How |
 |---|---|---|---|
-| 1 | Cierre de mes | ✅ | Un calendario lanza el proceso el día 1 de cada mes |
-| 2 | Recoger datos de Shopify (ventas, devoluciones, stock) y del banco (gastos) | ✅ | API de Shopify; extracto del banco exportado |
-| 3 | Juntar los datos en una sola tabla | ✅ | Google Sheets o una base de datos |
-| 4 | Calcular: ventas, gastos, beneficio, margen por prenda, devoluciones, stock y comparación con el mes anterior | ✅ | Fórmulas fijas (Python o la propia herramienta) |
-| 5 | Hacer los gráficos | ✅ | Gráficos generados automáticamente |
-| 6 | Montar el informe y explicar los números en lenguaje sencillo («este mes has ganado menos porque…») | ✅ | Plantilla + un modelo de IA (LLM) |
-| 7 | Revisar que las cifras tienen sentido | ❌ | Lo hace una persona: alguien tiene que responder de los números |
-| 8 | Enviar el informe al dueño | ✅ | Email automático, solo después del paso 7 |
+| 1 | Month-end close | ✅ | A schedule starts the process on the 1st of every month |
+| 2 | Collect data from Shopify (sales, returns, stock) and from the bank (expenses) | ✅ | Shopify API; exported bank statement |
+| 3 | Combine the data in a single table | ✅ | Google Sheets or a database |
+| 4 | Calculate: sales, expenses, profit, margin per item, returns, stock and comparison with the previous month | ✅ | Fixed formulas (Python or the tool itself) |
+| 5 | Make the charts | ✅ | Automatically generated charts |
+| 6 | Build the report and explain the numbers in plain language ("this month you earned less because…") | ✅ | Template + an AI model (LLM) |
+| 7 | Check that the figures make sense | ❌ | A person does it: someone has to be accountable for the numbers |
+| 8 | Send the report to the owner | ✅ | Automatic email, only after step 7 |
 
-**Resultado:** 7 de los 8 pasos se pueden automatizar. La persona solo revisa y aprueba.
+**Result:** 7 of the 8 steps can be automated. The person only reviews and approves.
 
-## Herramientas previstas
-n8n (proyecto 3), APIs (proyecto 2), IA (proyecto 4), Python (proyecto 5) y SQL (proyecto 6). Cada paso del portfolio construirá una pieza de este sistema.
+## Planned tools
+n8n (project 3), APIs (project 2), AI (project 4), Python (project 5) and SQL (project 6). Each step of the portfolio builds one piece of this system.

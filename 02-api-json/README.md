@@ -1,34 +1,34 @@
-# Proyecto 2 · Pedir datos a una API y leer el JSON
+# Project 2 · Requesting data from an API and reading the JSON
 
-## El problema
-La marca de ropa del [proyecto 1](../01-mapa-proceso/) vende también fuera de la zona euro. Para el informe mensual necesita pasar a euros las ventas cobradas en dólares (USD) o en libras (GBP). Hacerlo a mano significa buscar el tipo de cambio cada vez.
+## The problem
+The clothing brand from [project 1](../01-mapa-proceso/) also sells outside the eurozone. For the monthly report it needs to convert sales paid in dollars (USD) or pounds (GBP) into euros. Doing it by hand means looking up the exchange rate every time.
 
-## La solución
-Pedir el tipo de cambio a una **API** pública y gratuita, [Frankfurter](https://frankfurter.dev). Publica los tipos de referencia del Banco Central Europeo y no necesita registro ni clave.
+## The solution
+Request the exchange rate from a free public **API**, [Frankfurter](https://frankfurter.dev). It publishes the European Central Bank's reference rates and needs no sign-up or key.
 
-- **API:** la ventanilla por la que un programa pide datos a otro.
-- **Endpoint:** la dirección concreta de esa ventanilla (una URL).
-- **JSON:** el formato en el que vuelve la respuesta. Son pares `"nombre": valor`, como una ficha con casillas.
+- **API:** the service window through which one program asks another for data.
+- **Endpoint:** the specific address of that window (a URL).
+- **JSON:** the format the answer comes back in. It is made of `"name": value` pairs, like a form with boxes.
 
-## Cómo usarlo
+## How to use it
 
-### 1. Tipo de cambio de hoy
+### 1. Today's exchange rate
 ```bash
 curl "https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD,GBP"
 ```
-Respuesta real (12-11-2026):
+Real response (12 November 2026):
 ```json
 {"amount":1.0,"base":"EUR","date":"2026-11-12","rates":{"GBP":0.83595,"USD":1.1081}}
 ```
-Cómo leerla: 1 € = 1,1081 $ y 1 € = 0,83595 £.
+How to read it: €1 = $1.1081 and €1 = £0.83595.
 
-### 2. Tipos de cambio de un mes entero (para el informe mensual)
+### 2. Exchange rates for a whole month (for the monthly report)
 ```bash
 curl "https://api.frankfurter.dev/v1/2026-10-01..2026-10-31?base=EUR&symbols=USD"
 ```
-Devuelve un tipo por cada día hábil. Por ejemplo, el 1 de octubre de 2026 era `"USD":1.1298`.
+It returns one rate for each business day. For example, on 1 October 2026 it was `"USD":1.1298`.
 
-## Qué he aprendido
-- La URL lleva **parámetros** después del `?`: `base=EUR` (la moneda de partida) y `symbols=USD,GBP` (las monedas que quiero).
-- El JSON tiene **casillas dentro de casillas**: `rates` contiene `USD` y `GBP`.
-- En el proyecto 1, el paso «recoger datos de Shopify» funcionará igual: una URL, unos parámetros y una respuesta en JSON. La diferencia es que Shopify pide una clave, porque sus datos son privados.
+## What I learned
+- The URL carries **parameters** after the `?`: `base=EUR` (the starting currency) and `symbols=USD,GBP` (the currencies I want).
+- The JSON has **boxes inside boxes**: `rates` contains `USD` and `GBP`.
+- In project 1, the step "collect data from Shopify" will work the same way: a URL, some parameters and a JSON response. The difference is that Shopify asks for a key, because its data is private.

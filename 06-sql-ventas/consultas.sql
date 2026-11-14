@@ -1,4 +1,4 @@
--- 5 preguntas de negocio a la base de datos de ventas (datos ficticios).
+-- 6 preguntas de negocio a la base de datos de ventas (datos ficticios).
 -- Uso: sqlite3 ventas.db < consultas.sql
 
 .headers on

@@ -1,37 +1,37 @@
-# Proyecto 7 · El mismo flujo en Make: comparación con n8n
+# Project 7 · The same workflow in Make: comparison with n8n
 
-## El objetivo
-Rehacer el flujo de devoluciones del [proyecto 3](../03-n8n-devoluciones/) con otra herramienta, **Make**, para comparar las dos con el mismo trabajo. Make aparece en 8 de las 19 ofertas analizadas y n8n en 14.
+## The goal
+Rebuild the returns workflow from [project 3](../03-n8n-devoluciones/) with another tool, **Make**, to compare the two on the same job. Make appears in 8 of the 19 job offers analysed and n8n in 14.
 
-## El escenario en Make
+## The scenario in Make
 ```mermaid
 flowchart LR
-    A[Google Forms: nueva respuesta] --> B[Google Sheets: añadir fila]
-    B --> C[Gmail: enviar aviso]
+    A[Google Forms: new response] --> B[Google Sheets: add row]
+    B --> C[Gmail: send notification]
 ```
-1. **Google Forms · Watch Responses:** detecta cada solicitud de devolución nueva.
-2. **Google Sheets · Add a Row:** la guarda en la hoja `Devoluciones`, la misma del proyecto 3.
-3. **Gmail · Send an Email:** avisa a la tienda con el resumen de la devolución.
+1. **Google Forms · Watch Responses:** detects each new return request.
+2. **Google Sheets · Add a Row:** saves it in the `Devoluciones` (Returns) sheet, the same one as in project 3.
+3. **Gmail · Send an Email:** notifies the store with a summary of the return.
 
-Lo he probado con «Run once» (sin activar la programación, para no gastar créditos del plan gratuito).
+I tested it with "Run once" (without turning on the schedule, so as not to spend credits from the free plan).
 
-## Problemas que encontré y cómo los resolví
-- **El asunto mostraba código (`{"questionId":…,"textAnswers":…}`) en vez del número de pedido.** Google Forms entrega cada respuesta metida en varias «cajas». Hay que desplegar la respuesta hasta llegar a su `value` y mapear solo ese dato.
-- **El email llegaba todo en una línea.** El cuerpo estaba en formato HTML, que no respeta los saltos de línea. Lo arreglé cambiando el formato del cuerpo. Es el mismo problema que tuve en n8n con la opción «HTML».
+## Problems I ran into and how I solved them
+- **The subject showed code (`{"questionId":…,"textAnswers":…}`) instead of the order number.** Google Forms delivers each answer wrapped in several "boxes". You have to expand the answer down to its `value` and map only that piece of data.
+- **The email arrived all on one line.** The body was in HTML format, which ignores line breaks. I fixed it by changing the body format. It's the same problem I had in n8n with the "HTML" option.
 
-## Comparación: n8n frente a Make
-| | n8n (proyecto 3) | Make (este proyecto) |
+## Comparison: n8n vs Make
+| | n8n (project 3) | Make (this project) |
 |---|---|---|
-| Dónde funciona | En mi Mac (`localhost`): solo mientras el ordenador está encendido. Existe n8n Cloud, de pago | En la nube: funciona siempre, sin instalar nada |
-| Puesta en marcha | Más técnica: instalar con `npx`, crear un permiso OAuth en Google Cloud | Más sencilla: crear la cuenta y conectar Google con unos clics |
-| Mapear datos | Más fácil: el formulario de n8n entrega cada campo directamente | Más laborioso con Google Forms: hay que desplegar cada respuesta hasta su `value` |
-| Aspecto | Nodos unidos por flechas | Burbujas, más visual |
-| Plan gratuito | Sin límite de ejecuciones si lo instalas tú | 1.000 créditos al mes |
-| Marca de agua | Los emails añaden «enviado con n8n», pero se quita en las opciones del nodo (*Append n8n Attribution*) | — |
+| Where it runs | On my Mac (`localhost`): only while the computer is on. There is n8n Cloud, which is paid | In the cloud: always running, nothing to install |
+| Setup | More technical: install with `npx`, create an OAuth permission in Google Cloud | Simpler: create the account and connect Google in a few clicks |
+| Mapping data | Easier: the n8n form delivers each field directly | More laborious with Google Forms: you have to expand each answer down to its `value` |
+| Look | Nodes joined by arrows | Bubbles, more visual |
+| Free plan | No execution limit if you host it yourself | 1,000 credits per month |
+| Watermark | Emails add "sent with n8n", but you can remove it in the node options (*Append n8n Attribution*) | — |
 
-> Parte de la diferencia al mapear se debe a la fuente de datos (Google Forms frente al formulario propio de n8n), no solo a la herramienta.
+> Part of the difference in mapping comes from the data source (Google Forms vs n8n's own form), not just the tool.
 
-## Mi conclusión
-- **Personalmente, me resulta más práctico n8n:** mapear los datos es más fácil y lo controlo todo.
-- **Para una pyme sin nadie técnico, recomendaría Make:** funciona en la nube, no hay que instalar ni mantener nada y se conecta a Google con unos clics.
-- **Si la pyme tiene a alguien con conocimientos básicos, n8n compensa:** es más flexible y, instalado por uno mismo, no tiene límite de ejecuciones.
+## My conclusion
+- **Personally, I find n8n more practical:** mapping data is easier and I control everything.
+- **For an SME with no technical staff, I would recommend Make:** it runs in the cloud, there's nothing to install or maintain, and it connects to Google in a few clicks.
+- **If the SME has someone with basic technical knowledge, n8n is worth it:** it's more flexible and, self-hosted, has no execution limit.

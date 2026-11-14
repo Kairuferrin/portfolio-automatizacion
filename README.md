@@ -1,37 +1,39 @@
-# Portfolio de automatización · Kairu Ferrín
+# Automation portfolio · Kairu Ferrín
 
-Estudiante de Economía en la UB que aprende automatización para pymes. Ya he creado webs (mi primera web en HTML y el tema de una tienda Shopify) y me interesan las finanzas.
+Learning automation for SMEs. I have already built websites (my first one in HTML and the theme of a Shopify store), and I'm interested in finance.
+
+> **About the language:** Spanish is my native language, so I wrote the code (comments, messages and data) in Spanish, which is more comfortable for me. I publish the documentation in English to reach a wider audience and so more people can understand it.
 
 ## About me
 I'm Kairu, an economics student at the University of Barcelona focused on automation and websites for small and medium-sized businesses (SMEs). My first real-world project, which I worked on for months, went far beyond a website: I helped a baby-care consultant turn her expertise into a complete business, from positioning and branding to a bilingual Shopify site, legal pages, a WhatsApp-based contact flow and an affiliate revenue stream. This portfolio shows automation projects built with n8n, Make, Google Sheets, Gmail, Google Gemini (AI), Python, SQL (SQLite), REST APIs and Git/GitHub. I work with AI as a development partner: I plan the work, direct the build and review every change before it goes live. I work in English, Spanish and Catalan.
 
-## La historia
-Todos los proyectos giran en torno a **una pequeña marca de ropa que vende online con Shopify** (ficticia) y automatizan sus dos caras:
+## The story
+All the projects revolve around **a small clothing brand that sells online with Shopify** (fictional) and automate its two sides:
 
-- **Finanzas:** un «director financiero de bolsillo» que cada mes calcula y explica los números del negocio.
-- **Operaciones:** devoluciones y atención al cliente sin copiar y pegar.
+- **Finance:** a "pocket CFO" that calculates and explains the business's numbers every month.
+- **Operations:** returns and customer service without copy-pasting.
 
 ```mermaid
 flowchart LR
-    P1[1 · Mapa del proceso] --> P2[2 · API de tipos de cambio]
-    P2 --> P5[5 · Resumen mensual en Python]
-    P5 --> P6[6 · Preguntas con SQL]
-    P1 --> P3[3 · Devoluciones en n8n]
-    P3 --> P7[7 · Lo mismo en Make]
-    P1 --> P4[4 · Atención al cliente con IA]
+    P1[1 · Process map] --> P2[2 · Exchange rate API]
+    P2 --> P5[5 · Monthly summary in Python]
+    P5 --> P6[6 · Questions with SQL]
+    P1 --> P3[3 · Returns in n8n]
+    P3 --> P7[7 · The same in Make]
+    P1 --> P4[4 · AI customer service]
 ```
 
-**Herramientas:** n8n · Make · Google Sheets · Gmail · Google Gemini · Python · SQL (SQLite) · APIs REST · Git y GitHub
+**Tools:** n8n · Make · Google Sheets · Gmail · Google Gemini · Python · SQL (SQLite) · REST APIs · Git and GitHub
 
-## Proyectos
-| Nº | Proyecto | Qué aprendo | Estado |
+## Projects
+| # | Project | What I learn | Status |
 |---|---|---|---|
-| 1 | [Mapa de un proceso: «director financiero de bolsillo» para una marca de ropa](01-mapa-proceso/) | Detectar qué se puede automatizar | ✅ Hecho |
-| 2 | [Tipos de cambio desde una API para las ventas en dólares y libras](02-api-json/) | APIs y JSON | ✅ Hecho |
-| 3 | [Devoluciones automáticas: formulario → Google Sheets → Gmail](03-n8n-devoluciones/) | n8n | ✅ Hecho |
-| 4 | [Atención al cliente con IA: clasifica emails y deja borradores de respuesta](04-ia-atencion-cliente/) | IA dentro de un flujo | ✅ Hecho |
-| 5 | [Resumen mensual de ventas (datos ficticios) con conversión de moneda](05-python-ventas/) | Python | ✅ Hecho |
-| 6 | [Preguntas de negocio con SQL sobre las ventas (datos ficticios)](06-sql-ventas/) | SQL (SQLite) | ✅ Hecho |
-| 7 | [El flujo de devoluciones en Make y comparación con n8n](07-make-devoluciones/) | Make | ✅ Hecho |
+| 1 | [Process map: a "pocket CFO" for a clothing brand](01-mapa-proceso/) | Spotting what can be automated | ✅ Done |
+| 2 | [Exchange rates from an API for sales in dollars and pounds](02-api-json/) | APIs and JSON | ✅ Done |
+| 3 | [Automated returns: form → Google Sheets → Gmail](03-n8n-devoluciones/) | n8n | ✅ Done |
+| 4 | [AI customer service: classifies emails and leaves draft replies](04-ia-atencion-cliente/) | AI inside a workflow | ✅ Done |
+| 5 | [Monthly sales summary (fictional data) with currency conversion](05-python-ventas/) | Python | ✅ Done |
+| 6 | [Business questions with SQL on the sales data (fictional data)](06-sql-ventas/) | SQL (SQLite) | ✅ Done |
+| 7 | [The returns workflow in Make, compared with n8n](07-make-devoluciones/) | Make | ✅ Done |
 
-Cada proyecto tiene su carpeta con un README: el problema, la solución, cómo usarla y lo que aprendí. Los proyectos 5 y 6 usan **datos de ventas ficticios**, generados para practicar.
+Each project has its own folder with a README: the problem, the solution, how to use it and what I learned. Projects 3 and 4 also explain **why I built them the way I did**. Projects 5 and 6 use **fictional sales data**, generated for practice.

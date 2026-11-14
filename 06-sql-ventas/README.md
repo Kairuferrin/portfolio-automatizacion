@@ -1,36 +1,36 @@
-# Proyecto 6 · Preguntas de negocio con SQL
+# Project 6 · Business questions with SQL
 
-> ⚠️ **Datos ficticios.** Son las mismas ventas inventadas del [proyecto 5](../05-python-ventas/).
+> ⚠️ **Fictional data.** These are the same made-up sales from [project 5](../05-python-ventas/).
 
-## El problema
-Un CSV sirve para guardar ventas, pero no para hacerles preguntas rápidas. ¿Qué talla se devuelve más? ¿En qué moneda nos pagan? ¿Sube el ticket medio en Navidad? Responder a cada una a mano en Excel lleva tiempo.
+## The problem
+A CSV is fine for storing sales, but not for asking them quick questions. Which size gets returned most? What currency do customers pay in? Does the average ticket go up at Christmas? Answering each one by hand in Excel takes time.
 
-## La solución
-1. **`cargar_bd.py`** guarda las ventas en una base de datos **SQLite** (`ventas.db`), un único archivo que no necesita servidor. Añade la columna `importe_eur` reutilizando las funciones de conversión del proyecto 5, sin copiar el código.
-2. **`consultas.sql`** contiene 6 preguntas de negocio escritas en **SQL**.
+## The solution
+1. **`cargar_bd.py`** saves the sales in a **SQLite** database (`ventas.db`), a single file that needs no server. It adds the `importe_eur` (amount in euros) column by reusing the conversion functions from project 5, without copying the code.
+2. **`consultas.sql`** contains 6 business questions written in **SQL**.
 
-## Cómo usarlo
+## How to use it
 ```bash
-python3 ../05-python-ventas/generar_datos.py   # solo si no existe el CSV
+python3 ../05-python-ventas/generar_datos.py   # only if the CSV doesn't exist
 python3 cargar_bd.py
 sqlite3 ventas.db < consultas.sql
 ```
 
-## Resultados (con los datos ficticios)
-| Pregunta | Respuesta |
+## Results (with the fictional data)
+| Question | Answer |
 |---|---|
-| 1. Ingresos netos por mes | Coinciden con el proyecto 5. Diciembre es el mejor mes: 19.196 € |
-| 2. Productos con más unidades vendidas | Chaqueta (475), Vestido (461), Camiseta (455) |
-| 3. Tallas más devueltas | La M (9,0 % de líneas) y la L (8,5 %); la XS es la que menos (5,8 %) |
-| 4. Monedas de pago | EUR 80,3 %, USD 10,3 %, GBP 9,4 % |
-| 5. Ticket medio bruto por trimestre (incluye pedidos devueltos) | Entre 100,63 € (T4) y 108,58 € (T3) |
-| 6. Producto que más se devuelve (consulta escrita por mí) | Pantalón (8,8 % de líneas); la sudadera es el que menos (6,3 %) |
+| 1. Net revenue per month | Matches project 5. December is the best month: €19,196 |
+| 2. Products with the most units sold | Jacket (475), Dress (461), T-shirt (455) |
+| 3. Most returned sizes | M (9.0% of lines) and L (8.5%); XS is the least returned (5.8%) |
+| 4. Payment currencies | EUR 80.3%, USD 10.3%, GBP 9.4% |
+| 5. Average gross ticket per quarter (includes returned orders) | Between €100.63 (Q4) and €108.58 (Q3). The query labels quarters T1–T4 (`trimestre` = quarter) |
+| 6. Most returned product (query written by me) | Trousers (8.8% of lines); the sweatshirt is the least returned (6.3%) |
 
-En la pregunta 1 puede haber diferencias de ±0,02 € con el proyecto 5, porque aquí cada venta se redondea a céntimos antes de sumar.
+In question 1 there may be differences of ±€0.02 compared with project 5, because here each sale is rounded to cents before adding up.
 
-## Qué he aprendido
-- **SQL** = hacer preguntas a una tabla: `SELECT` (qué columnas), `FROM` (de qué tabla), `WHERE` (filtrar filas), `GROUP BY` (agrupar, como una tabla dinámica), `ORDER BY` (ordenar) y `LIMIT` (quedarme con las primeras).
-- **Funciones de resumen:** `SUM`, `COUNT`, `ROUND` y `COUNT(DISTINCT ...)` para contar pedidos sin repetir.
-- **`CASE WHEN`:** un «si… entonces…» dentro de la consulta, como la función SI de Excel.
-- **Subconsulta:** una consulta dentro de otra, para calcular porcentajes sobre el total.
-- **Reutilizar código** importando funciones de otro proyecto en vez de copiarlas.
+## What I learned
+- **SQL** = asking a table questions: `SELECT` (which columns), `FROM` (which table), `WHERE` (filter rows), `GROUP BY` (group, like a pivot table), `ORDER BY` (sort) and `LIMIT` (keep only the first ones).
+- **Summary functions:** `SUM`, `COUNT`, `ROUND` and `COUNT(DISTINCT ...)` to count orders without repeats.
+- **`CASE WHEN`:** an "if… then…" inside the query, like Excel's IF function.
+- **Subquery:** a query inside another one, to calculate percentages of the total.
+- **Reusing code** by importing functions from another project instead of copying them.
